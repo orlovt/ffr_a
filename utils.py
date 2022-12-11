@@ -15,8 +15,6 @@ class ffr():
         self.effr = ffr.get_effr_df(self)
         self.futures_prices =  ffr.month_fututres_df(self)
 
-
-
     def get_contract_name_ffr(self): 
         
         f_d = {1:'ZQF', 2:'ZQG', 3:'ZQH', 4:'ZQJ', 
@@ -68,8 +66,11 @@ class trajectory_dt():
             df.reset_index(inplace = True )
             df["Close"].round(2)
             df["R_IMPL"] = 100 - df["Close"]
-            #R_IMPL = round(100 - float(df.loc[df["Date"] == self.dt]["Close"]), 2)
-            res[i] = df
+            df["R_IMPL"] = df["R_IMPL"].round(2)
+            df = df[["Date", "R_IMPL"]].copy()
+
+            res[i] = Helpers.df_to_dict(df)
+
         return res
 
     def price(self): 
@@ -109,6 +110,15 @@ class Helpers():
         dt = dt - timedelta(n)
         return Helpers.B_filter(dt)
 
+    def df_to_dict(df): 
+        res = {}
+        for i in range(df.shape[0]):
+            res[df['Date'][i]] = df['R_IMPL'][i]
+        return res 
+
+
+
+
 if __name__ == "__main__":
     #test = ffr(1, 23, '2022-10-01')
 
@@ -123,7 +133,8 @@ if __name__ == "__main__":
 
     t = trajectory_dt('2021-09-01')
     #print(t.price())
-    #for i in t.dfs:
-    #    print(t.dfs[i].head())
-    print(t.price())
-    print(t.price2())
+    dt = datetime.strptime("2022-11-01", '%Y-%m-%d' )
+    for i in t.dfs:
+        print(t.dfs[i][dt])
+    #print(t.price())
+    #print(t.price2())
