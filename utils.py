@@ -1,3 +1,4 @@
+import pandas as pd 
 import yfinance as yf
 import pandas_datareader as pdr 
 
@@ -28,7 +29,7 @@ class ffr():
         df = yf.download(self.futures_name, start=self.start_dt, end = datetime.now(), progress=False)
         df.reset_index(inplace = True )
         df = df[["Date", "Close"]].copy()
-        df["P"].round(2)
+        df["Close"].round(2)
         df.columns = ["DT", "P"]
         df["R_IMPL"] = 100 - df["P"]
 
@@ -93,7 +94,37 @@ class trajectory_dt():
             dict[i] = R_IMPL
         return dict
 
+class ffr_months_df():
+    def __init__(self, dt_finish = 0):
+        
+        if dt_finish == 0: 
+            dt = datetime.now()
+
+        self.dt = dt 
+        self.df = ffr_months_df.get_df(self)
     
+    def get_df(self): 
+    
+        contracts= {'2022-12-01':'ZQZ22.CBT', '2023-01-01':'ZQF23.CBT', '2023-02-01':'ZQG23.CBT', '2023-03-01':'ZQH23.CBT', 
+                    '2023-04-01':'ZQJ23.CBT', '2023-05-01':'ZQK23.CBT', '2023-06-01':'ZQM23.CBT', '2023-07-01':'ZQN23.CBT'}
+        res = pd.DataFrame(columns = ['Date'])
+    
+        for i in contracts: 
+
+            df = yf.download(contracts[i], start = self.dt - timedelta(185), end = self.dt, progress=False)
+            df.reset_index(inplace = True )
+
+            df["R_IMPL"] = 100 - df["Close"].round(2)
+            temp = df[["Date", "R_IMPL", "Close"]].copy()
+
+            print('date', i, '\n\ncontract', contracts[i])
+            print(temp.head(2))
+            print(temp.tail(2))
+    
+            res = res.join(temp, lsuffix = i, on = 'Date')
+    
+        return res
+
 
 class Helpers(): 
     def B_filter(dt): # returns the last date markets were open for the date given in dt format
@@ -104,8 +135,7 @@ class Helpers():
             return dt - timedelta(1)
         else: 
             return dt
-
-
+ 
     def days_n_before(dt, n): #returns the nth day before the given day when the markets were working, (Sun,1)--> Fri in dt format
         dt = dt - timedelta(n)
         return Helpers.B_filter(dt)
@@ -120,7 +150,7 @@ class Helpers():
 
 
 if __name__ == "__main__":
-    #test = ffr(1, 23, '2022-10-01')
+    test = ffr(1, 23, '2022-10-01')
 
     #print(test.get_contract_name_ffr())
     #print(test.month_fututres_df())
@@ -131,10 +161,12 @@ if __name__ == "__main__":
     #print(test.effr.head(20))
 
 
-    t = trajectory_dt('2021-09-01')
+    #t = trajectory_dt('2021-09-01')
     #print(t.price())
-    dt = datetime.strptime("2022-11-01", '%Y-%m-%d' )
-    for i in t.dfs:
-        print(t.dfs[i][dt])
+    #dt = datetime.strptime("2022-11-01", '%Y-%m-%d' )
+    #for i in t.dfs:
+    #    print(t.dfs[i][dt])
     #print(t.price())
     #print(t.price2())
+
+    print(ffr_months_df().df)
