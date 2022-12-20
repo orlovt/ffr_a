@@ -107,7 +107,8 @@ class ffr_months_df():
         
         contracts= {'2022-12-01':'ZQZ22.CBT', '2023-01-01':'ZQF23.CBT', '2023-02-01':'ZQG23.CBT', '2023-03-01':'ZQH23.CBT', 
                     '2023-04-01':'ZQJ23.CBT', '2023-05-01':'ZQK23.CBT', '2023-06-01':'ZQM23.CBT', '2023-07-01':'ZQN23.CBT', 
-                    '2023-08-01':'ZQQ23.CBT', '2023-09-01':'ZQU23.CBT'}
+                    '2023-08-01':'ZQQ23.CBT', '2023-09-01':'ZQU23.CBT', '2023-10-01':'ZQV23.CBT', '2023-11-01':'ZQX23.CBT', 
+                    '2023-12-01':'ZQZ23.CBT'}
         res = ffr_months_df.get_futures(self, 'ZQN23.CBT')
         res = res[["Date"]]
         res["Date"] = res['Date'].astype('datetime64[ns]') 
