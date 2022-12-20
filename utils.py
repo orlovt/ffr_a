@@ -53,8 +53,6 @@ class trajectory_dt():
             dt = datetime.strptime(dt, '%Y-%m-%d')
         self.dt = dt
 
-        #self.range = {'12':'ZQZ22.CBT', '01':'ZQF23.CBT', '02':'ZQG23.CBT', '03':'ZQH23.CBT', 
-        #              '04':'ZQJ23.CBT', '05':'ZQK23.CBT', '06':"ZQM23.CBT"}
         self.range = {'2022-12-01':'ZQZ22.CBT', '2023-01-01':'ZQF23.CBT', '2023-02-01':'ZQG23.CBT', '2023-03-01':'ZQH23.CBT', 
                       '2023-04-01':'ZQJ23.CBT', '2023-05-01':'ZQK23.CBT', '2023-06-01':'ZQM23.CBT', '2023-07-01':'ZQN23.CBT'}
         self.dfs = trajectory_dt.get_dfs(self)
@@ -177,6 +175,5 @@ if __name__ == "__main__":
     #print(t.price())
     #print(t.price2()) 
 
-    #print(ffr_months_df().df.tail(5))
     print(ffr_months_df().df)
 
