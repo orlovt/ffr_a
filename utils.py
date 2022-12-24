@@ -162,7 +162,6 @@ if __name__ == "__main__":
 
     #print(test.futures_name)
     #print(test.futures_prices.head(15))
-    #print(test.effr.head(20))
 
 
     #t = trajectory_dt('2021-09-01')
