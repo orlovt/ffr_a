@@ -4,49 +4,6 @@ import pandas_datareader as pdr
 
 from datetime import datetime, timedelta
 
-
-
-
-class ffr(): 
-    def __init__(self, month, year, start_dt): 
-        self.month = month 
-        self.year = year
-        self.start_dt = datetime.strptime(start_dt, '%Y-%m-%d' )
-        self.futures_name = ffr.get_contract_name_ffr(self)
-        self.effr = ffr.get_effr_df(self)
-        self.futures_prices =  ffr.month_fututres_df(self)
-
-    def get_contract_name_ffr(self): 
-        
-        f_d = {1:'ZQF', 2:'ZQG', 3:'ZQH', 4:'ZQJ', 
-               5:'ZQK', 6:"ZQM", 7:'ZQN', 8:'ZQQ', 
-               9:'ZQU', 10:'ZQV',11:'ZQX', 12:'ZQZ'}
-        
-        return f_d[self.month] + str(self.year) + '.CBT'
-
-    def month_fututres_df(self): 
-        
-        df = yf.download(self.futures_name, start=self.start_dt, end = datetime.now(), progress=False)
-        df.reset_index(inplace = True )
-        df = df[["Date", "Close"]].copy()
-        df["Close"].round(2)
-        df.columns = ["DT", "P"]
-        df["R_IMPL"] = 100 - df["P"]
-
-        df.set_index("DT")
-
-        
-        return df 
-
-    def get_effr_df(self):
-        end_dt = datetime.now()
-        df = pdr.DataReader("EFFR", "fred", self.start_dt, end_dt)
-        df.reset_index(inplace = True)
-        df = df.dropna(axis = 0)
-        df.columns = ["DT", "EFFR"]
-        df.set_index("DT")
-        return df     
-
 class trajectory_dt(): 
     def __init__(self, dt):
         if type(dt) == str: 
@@ -128,7 +85,6 @@ class ffr_months_df():
 
         return df
 
-
 class Helpers(): 
     def B_filter(dt): # returns the last date markets were open for the date given in dt format
         dow = datetime.weekday(dt)
@@ -148,10 +104,6 @@ class Helpers():
         for i in range(df.shape[0]):
             res[df['Date'][i]] = df['R_IMPL'][i]
         return res 
-
-
-
-
 
 if __name__ == "__main__":
     #test = ffr(1, 23, '2022-10-01')
