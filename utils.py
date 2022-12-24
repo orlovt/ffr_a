@@ -49,7 +49,7 @@ class trajectory_dt():
             dict[i] = R_IMPL
         return dict
 
-class ffr_months_df():
+class FFR__df():
     def __init__(self, dt_finish = 0):
         
         if dt_finish == 0: 
