@@ -1,7 +1,7 @@
 import pandas as pd 
 import yfinance as yf
-
 from datetime import datetime, timedelta
+
 
 class FFR__df():
     def __init__(self, dt_finish = 0):
