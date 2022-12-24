@@ -56,7 +56,7 @@ class FFR__df():
             dt = datetime.now()
 
         self.dt = dt 
-        self.df = ffr_months_df.get_df(self)
+        self.df = FFR__df.get_df(self)
     
     def get_df(self): 
         
@@ -64,13 +64,13 @@ class FFR__df():
                     '2023-04-01':'ZQJ23.CBT', '2023-05-01':'ZQK23.CBT', '2023-06-01':'ZQM23.CBT', '2023-07-01':'ZQN23.CBT', 
                     '2023-08-01':'ZQQ23.CBT', '2023-09-01':'ZQU23.CBT', '2023-10-01':'ZQV23.CBT', '2023-11-01':'ZQX23.CBT', 
                     '2023-12-01':'ZQZ23.CBT'}
-        res = ffr_months_df.get_futures(self, 'ZQN23.CBT')
+        res = FFR__df.get_futures(self, 'ZQN23.CBT')
         res = res[["Date"]]
         res["Date"] = res['Date'].astype('datetime64[ns]') 
 
     
         for i in contracts: 
-            temp = ffr_months_df.get_futures(self, contracts[i])
+            temp = FFR__df.get_futures(self, contracts[i])
             res[i] = temp["R_IMPL"]
         return res
 
