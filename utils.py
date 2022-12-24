@@ -53,12 +53,6 @@ class Helpers():
         dt = dt - timedelta(n)
         return Helpers.B_filter(dt)
 
-    def df_to_dict(df): 
-        res = {}
-        for i in range(df.shape[0]):
-            res[df['Date'][i]] = df['R_IMPL'][i]
-        return res 
-
 if __name__ == "__main__":
 
     print(FFR__df().df.head(20))
