@@ -1,53 +1,7 @@
 import pandas as pd 
 import yfinance as yf
-import pandas_datareader as pdr 
 
 from datetime import datetime, timedelta
-
-class trajectory_dt(): 
-    def __init__(self, dt):
-        if type(dt) == str: 
-            dt = datetime.strptime(dt, '%Y-%m-%d')
-        self.dt = dt
-
-        self.range = {'2022-12-01':'ZQZ22.CBT', '2023-01-01':'ZQF23.CBT', '2023-02-01':'ZQG23.CBT', '2023-03-01':'ZQH23.CBT', 
-                      '2023-04-01':'ZQJ23.CBT', '2023-05-01':'ZQK23.CBT', '2023-06-01':'ZQM23.CBT', '2023-07-01':'ZQN23.CBT'}
-        self.dfs = trajectory_dt.get_dfs(self)
-        
-    def get_dfs(self):
-        res = {}
-
-        for i in self.range:
-            df = yf.download(self.range[i], start = self.dt - timedelta(90), end = self.dt, progress=False)
-            df.reset_index(inplace = True )
-            df["Close"].round(2)
-            df["R_IMPL"] = 100 - df["Close"]
-            df["R_IMPL"] = df["R_IMPL"].round(2)
-            df = df[["Date", "R_IMPL"]].copy()
-
-            res[i] = Helpers.df_to_dict(df)
-
-        return res
-
-    def price(self): 
-        dict = {'dt':self.dt}        
-        for i in self.range: 
-            df = yf.download(self.range[i], start = self.dt - timedelta(2), end = self.dt + timedelta(2), progress=False)
-            df.reset_index(inplace = True )
-
-            R_IMPL = round(100 - float(df.loc[df["Date"] == self.dt]["Close"]), 2)
-            dict[i] = R_IMPL
-
-        return dict
-
-    def price2(self): 
-        dict = {'dt':self.dt}        
-        for i in self.dfs: 
-            df = self.dfs[i]
-            R_IMPL = (df.loc[df["Date"] == self.dt]["R_IMPL"])
-            print(R_IMPL)
-            dict[i] = R_IMPL
-        return dict
 
 class FFR__df():
     def __init__(self, dt_finish = 0):
@@ -106,25 +60,6 @@ class Helpers():
         return res 
 
 if __name__ == "__main__":
-    #test = ffr(1, 23, '2022-10-01')
-    
-    #print(test.get_contract_name_ffr())
-    #print(test.month_fututres_df())
-    #print(test.get_effr_df())
 
-    #print(test.futures_name)
-    #print(test.futures_prices.head(15))
-
-
-    #t = trajectory_dt('2021-09-01')
-    #print(t.price())
-    #dt = datetime.strptime("2022-11-01", '%Y-%m-%d' )
-    
-    #for i in t.dfs:
-    #    print(t.dfs[i][dt])
-
-    #print(t.price())
-    #print(t.price2()) 
-
-    print(ffr_months_df().df)
+    print(FFR__df().df.head(20))
 
