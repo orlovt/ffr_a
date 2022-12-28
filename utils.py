@@ -1,5 +1,6 @@
 import pandas as pd 
 import yfinance as yf
+import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
 
@@ -55,7 +56,50 @@ class FFR__df():
 
         return df[["Date", "R_IMPL"]].copy()
 
+class FFR_graphs():
+    def __init__(self):
+        self.df = FFR__df().df.copy()
+
+    def hist_exp(self, start_dt, end_dt, period):
+
+        h_df =self.df.loc[(self.df["Date"] >= start_dt) & (self.df["Date"] <= end_dt)]
+
+
+        #plotting futures data
+        #0y axis is the rate 
+        #0x date 
+        #legends correspond to futures contracts from yahoo finance  
+        fig = go.Figure()
+        fig.update_layout(title = "Implired FedFundsRate for given month")
+
+        #setting number of months and intervals 
+        for i in h_df.columns[1::period]:
+            #converting column name into datetime format, for lines naming 
+            dt = datetime.strptime(i, '%Y-%m-%d' )
+            fig.add_trace(go.Scatter(x = h_df['Date'], y = h_df[i], name = dt.strftime("%b") + dt.strftime("%y")))
+        #return fig_2.show()
+        return fig.show()
+
+    def impl_exp(self, start_dt, end_dt, period):
+        
+        i_df =self.df.loc[(self.df["Date"] >= start_dt) & (self.df["Date"] <= end_dt)][::period]
+
+        # transforming dataframe, resetting indexes
+        i_df = i_df.set_index('Date')
+        i_df = i_df.T
+        i_df.reset_index(inplace = True)
+
+        # plotting the implied ffr trajectory using plotly library 
+        fig = go.Figure()
+        fig.update_layout(title = "Implied FFR trajectory @time")
+        for proj_month in i_df.columns[1:]:#setting custom range 
+
+            fig.add_trace(go.Scatter(x = i_df['index'], y = i_df[proj_month], name = proj_month.strftime("%d") + proj_month.strftime("%b") + proj_month.strftime("%y"))) #labeling and plotting lines
+
+        return fig.show()
+
 class Helpers(): 
+
      
     def B_filter(dt):
     
@@ -74,7 +118,16 @@ class Helpers():
     # returns the nth day before the given day when the markets were working, (Sun,1)--> Fri in dt format
         return Helpers.B_filter(dt)
 
+
 if __name__ == "__main__":
 
-    print(FFR__df().df.head(20))
+    #print(FFR__df().df.head(20))
+    g = FFR_graphs()
+    #print(g.df.head(10))
+    #print(dir(g))
+    #print(g.hist_exp("2022-01-01", "2022-12-25", 10))
+    print(g.impl_exp("2022-01-01", "2022-12-25", 30))
+
+
+
 
