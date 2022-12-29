@@ -46,7 +46,7 @@ class FFR__df():
     # parsing futures prices using yfinancie library 
         
         # setting start and end date 
-        range_days = 185
+        range_days = 365
         df = yf.download(contract, start = self.dt - timedelta(range_days), end = self.dt, progress=False)
         df.reset_index(inplace = True )
 
@@ -130,6 +130,10 @@ if __name__ == "__main__":
     print(g.hist_exp("2022-01-01", "2022-12-25", 10))
     
     print(g.impl_exp("2022-01-01", "2022-12-25", 30))
+
+    print(g.impl_exp("2022-05-10", "2022-05-20", 3))
+
+
 
 
 
