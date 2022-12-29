@@ -121,11 +121,14 @@ class Helpers():
 
 if __name__ == "__main__":
 
-    #print(FFR__df().df.head(20))
+    print(FFR__df().df.head(20))
+    
     g = FFR_graphs()
-    #print(g.df.head(10))
-    #print(dir(g))
-    #print(g.hist_exp("2022-01-01", "2022-12-25", 10))
+    
+    print(g.df.head(10))
+
+    print(g.hist_exp("2022-01-01", "2022-12-25", 10))
+    
     print(g.impl_exp("2022-01-01", "2022-12-25", 30))
 
 
