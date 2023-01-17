@@ -7,9 +7,11 @@ On my Money and Banking class at the University of Minnesota Terry Firzgerald ha
 
 ## Implementation 
 
-Later on I decied that it would be pretty convenient and cool to see how the implied trajectory of the fed funds rate changes over time. In order to do this I downloaded the futures historical prices from yahoo finiance, conducted some algebraic operations on the data and plotted the trajectories. 
+Later on I decied that it would be pretty convenient and cool to see how the implied trajectory of the fed funds rate changes over time. In order to do this I downloaded the futures historical prices from [yahoo finiance](https://finance.yahoo.com/quote/ZQ%3DF/futures?p=ZQ%3DF) using [yfinance](https://pypi.org/project/yfinance/), conducted some algebraic operations on the data and plotted the trajectories using [ploty](https://plotly.com). 
 
 # Some Examples
+
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 
 
