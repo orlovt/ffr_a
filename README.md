@@ -11,12 +11,12 @@ Later on I decied that it would be pretty convenient and cool to see how the imp
 
 # Some Examples
 
->>>graphs.impl_exp("2022-06-05", "2022-06-30", 7)
+>graphs.impl_exp("2022-06-05", "2022-06-30", 7)
 
 >The command plots the impled trajectories of the fedfunds from the June 5th to June 30th with a period of 7 days 
 ![EX1](plts/plot1.png)<
 
->>>graphs.impl_exp("2022-10-18", "2022-12-15", 10)
+>graphs.impl_exp("2022-10-18", "2022-12-15", 10)
 
 >The command plots the impled trajectories of the fedfunds from the Oct 18 5th to Dec 15th with a period of 10 days 
 ![ex2](plts/plot2.png)<
